@@ -1,0 +1,24 @@
+{
+  "name": "trendyol-faker",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "ismail hakki tekin <ihakkitekin@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watchAll",
+    "fake": "ts-node src/fake.ts"
+  },
+  "dependencies": {
+    "faker": "^4.1.0",
+    "typescript": "^3.4.3"
+  },
+  "devDependencies": {
+    "@types/faker": "^4.1.5",
+    "@types/jest": "^24.0.11",
+    "@types/node": "^11.13.5",
+    "jest": "^24.7.1",
+    "ts-jest": "^24.0.2",
+    "ts-node": "^8.1.0"
+  }
+}

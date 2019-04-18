@@ -1,0 +1,7 @@
+dist/
+node_modules
+.gitignore
+yarn.lock
+*.log
+src/public
+.idea

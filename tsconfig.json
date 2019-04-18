@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "target": "es5",
+    "module": "commonjs",
+    "lib": ["es6", "es5", "dom", "es2017"],
+    "declaration": false,
+    "declarationMap": false,
+    "sourceMap": false,
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "listEmittedFiles": true,
+    "types": ["node", "jest",]
+  },
+  "exclude": [
+    "*/**/node_modules",
+    "*/**/__test__",
+    "!node_modules/@types"
+  ],
+  "include": ["./src"],
+  "emitDecoratorMetadata": true,
+  "experimentalDecorators": true
+}
