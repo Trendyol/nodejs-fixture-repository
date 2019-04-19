@@ -1,4 +1,3 @@
-import path from 'path';
 import glob from 'glob';
 import faker from 'faker';
 import { generateDocumentation, IInterfaceType } from './typeChecker';

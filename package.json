@@ -1,25 +1,35 @@
 {
-  "name": "trendyol-faker",
+  "name": "@trendyol/faker",
   "version": "1.0.0",
-  "main": "index.js",
-  "author": "ismail hakki tekin <ihakkitekin@gmail.com>",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "author": "ismail hakki tekin <ismail.tekin@trendyol.com>",
   "license": "MIT",
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watchAll",
-    "fake": "ts-node src/faker.ts"
+    "build": "tsc",
+    "prepublish": "yarn cov && yarn build",
+    "cov": "jest --coverage",
+    "format": "prettier --write --loglevel=error \"src/**/*\" \"__test__/**/*\"",
+    "lint": "tslint -c tslint.json --project tsconfig.json \"src/**/*\" \"__test__/**/*\""
   },
   "dependencies": {
     "faker": "^4.1.0",
     "glob": "^7.1.3",
     "typescript": "^3.4.3"
   },
+  "precommit": [
+    "yarn format",
+    "yarn lint"
+  ],
   "devDependencies": {
     "@types/faker": "^4.1.5",
     "@types/glob": "^7.1.1",
     "@types/jest": "^24.0.11",
     "@types/node": "^11.13.5",
     "jest": "^24.7.1",
+    "precommit": "^1.2.2",
     "prettier": "^1.17.0",
     "ts-jest": "^24.0.2",
     "ts-node": "^8.1.0",

@@ -30,8 +30,6 @@ export function generateDocumentation(
     }
   }
 
-  fs.writeFileSync('classes.json', JSON.stringify(output, undefined, 4));
-
   return output;
 }
 

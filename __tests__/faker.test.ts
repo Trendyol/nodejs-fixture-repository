@@ -1,6 +1,5 @@
 import { IPrimitives, INested } from './models/testModel';
-import { Faker } from './../src/faker';
-import path from 'path';
+import { Faker } from '../src/faker';
 
 describe('Faker tests', () => {
   let faker: Faker;
