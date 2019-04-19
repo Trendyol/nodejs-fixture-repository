@@ -17,6 +17,6 @@ You need to create an instance of Faker. It takes a pattern for matching your mo
     
     const faker = new Faker('**/models/**');
     
-	  const result: IMyMode = faker.fake('IMyModel');
+	const result: IMyModel = faker.fake('IMyModel');
 
 It walks through all matched files and extracts interfaces. For that reason, it is advised that you create a global faker object before you run your tests.
