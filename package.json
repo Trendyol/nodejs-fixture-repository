@@ -7,18 +7,23 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watchAll",
-    "fake": "ts-node src/fake.ts"
+    "fake": "ts-node src/faker.ts"
   },
   "dependencies": {
     "faker": "^4.1.0",
+    "glob": "^7.1.3",
     "typescript": "^3.4.3"
   },
   "devDependencies": {
     "@types/faker": "^4.1.5",
+    "@types/glob": "^7.1.1",
     "@types/jest": "^24.0.11",
     "@types/node": "^11.13.5",
     "jest": "^24.7.1",
+    "prettier": "^1.17.0",
     "ts-jest": "^24.0.2",
-    "ts-node": "^8.1.0"
+    "ts-node": "^8.1.0",
+    "tslint": "^5.16.0",
+    "tslint-config-airbnb": "^5.11.1"
   }
 }

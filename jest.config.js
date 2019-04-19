@@ -5,7 +5,7 @@ module.exports = {
   collectCoverage: false,
   collectCoverageFrom: ['src/**/*.ts'],
   coveragePathIgnorePatterns: ['src/index.ts', 'src/global.d.ts', 'src/types'],
-  testPathIgnorePatterns: ['./__tests__/interfaces.ts'],
+  testPathIgnorePatterns: ['./__tests__/models/'],
   testEnvironment: 'node',
   globals: {
     'ts-jest': {

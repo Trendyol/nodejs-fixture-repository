@@ -1,21 +1,24 @@
 import * as ts from 'typescript';
 import * as fs from 'fs';
 
-interface IInterfaceTypes {
+export interface IInterfaceType {
   name: string;
-  parameters: IInterfaceParameters[];
+  parameters: IInterfaceParameter[];
 }
 
-interface IInterfaceParameters {
+export interface IInterfaceParameter {
   name: string;
   type: string;
 }
 
 let checker: ts.TypeChecker;
-let output: IInterfaceTypes[];
+let output: IInterfaceType[];
 
-export function generateDocumentation(fileNames: string[], options: ts.CompilerOptions): void {
-  let program = ts.createProgram(fileNames, options);
+export function generateDocumentation(
+  fileNames: string[],
+  options: ts.CompilerOptions
+): IInterfaceType[] {
+  const program = ts.createProgram(fileNames, options);
 
   checker = program.getTypeChecker();
 
@@ -29,7 +32,7 @@ export function generateDocumentation(fileNames: string[], options: ts.CompilerO
 
   fs.writeFileSync('classes.json', JSON.stringify(output, undefined, 4));
 
-  return;
+  return output;
 }
 
 function visit(node: ts.Node) {
@@ -38,29 +41,31 @@ function visit(node: ts.Node) {
   }
 
   if (ts.isInterfaceDeclaration(node) && node.name) {
-    let symbol = checker.getSymbolAtLocation(node.name);
+    const symbol = checker.getSymbolAtLocation(node.name);
     if (symbol) {
       output.push(serialize(symbol));
     }
   }
 }
 
-function serializeMainSymbol(symbol: ts.Symbol): IInterfaceTypes {
+function serializeMainSymbol(symbol: ts.Symbol): IInterfaceType {
   return {
     name: symbol.getName(),
     parameters: []
   };
 }
 
-function serializeSymbol(symbol: ts.Symbol): IInterfaceParameters {
+function serializeSymbol(symbol: ts.Symbol): IInterfaceParameter {
   return {
     name: symbol.getName(),
-    type: checker.typeToString(checker.getTypeOfSymbolAtLocation(symbol, symbol.valueDeclaration!))
+    type: checker.typeToString(
+      checker.getTypeOfSymbolAtLocation(symbol, symbol.valueDeclaration!)
+    )
   };
 }
 
 function serialize(symbol: ts.Symbol) {
-  let details = serializeMainSymbol(symbol);
+  const details = serializeMainSymbol(symbol);
   if (symbol.members) {
     symbol.members.forEach(member => {
       if (details.parameters) {
@@ -73,8 +78,8 @@ function serialize(symbol: ts.Symbol) {
 
 function isNodeExported(node: ts.Node): boolean {
   return (
-    // @ts-ignore
-    (ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Export) !== 0 ||
+    (ts.isInterfaceDeclaration(node) &&
+      ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Export) !== 0 ||
     (!!node.parent && node.parent.kind === ts.SyntaxKind.SourceFile)
   );
 }
