@@ -1,4 +1,4 @@
-import { IPrimitives, INested, IArrayType } from './models/testModel';
+import { IPrimitives, INested, IArrayType, IUnion } from './models/testModel';
 import { Faker } from '../src/faker';
 import { isArray } from 'util';
 
@@ -37,7 +37,12 @@ describe('Faker tests', () => {
     expect(isArray(result.nestedArray)).toBeTruthy();
     expect(result.stringArray.length).toBeGreaterThan(0);
     expect(result.nestedArray.length).toBeGreaterThan(0);
+  });
 
-    console.log(result.nestedArray);
+  it('should fake union types correctly', () => {
+    const result: IUnion = faker.fake('IUnion');
+
+    expect(typeof result.union).toMatch(/(string|number|boolean)/g);
+    expect(typeof result.union).toMatch(/(object|boolean)/g);
   });
 });

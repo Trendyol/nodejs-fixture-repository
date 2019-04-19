@@ -12,7 +12,7 @@ export interface INested {
 }
 
 export interface IUnion {
-  union: string | number;
+  union: string | number | boolean;
   nestedUnion: boolean | INested;
 }
 

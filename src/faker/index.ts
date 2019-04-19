@@ -50,7 +50,10 @@ export class Faker {
 
   private getValueForType(type: string): any {
     let value: any;
-    if (this.isPrimitiveType(type)) {
+
+    if (this.isUnionType(type)) {
+      value = this.generateUnionTypeValue(type);
+    } else if (this.isPrimitiveType(type)) {
       value = this.generatePrimitiveTypeValue(type);
     } else if (this.isArrayType(type)) {
       value = this.generateValuesForArrayType(type);
@@ -59,6 +62,20 @@ export class Faker {
     }
 
     return value;
+  }
+
+  private isUnionType(type: string): boolean {
+    return type.indexOf('|') > -1;
+  }
+
+  private generateUnionTypeValue(type: string) {
+    const unionParts = type.split('|');
+    const selectedUnionIndex =
+      Math.floor(Math.random() * unionParts.length) + 0;
+
+    const selectedUnionType = unionParts[selectedUnionIndex].trim();
+
+    return this.getValueForType(selectedUnionType);
   }
 
   private isArrayType(type: string): boolean {
