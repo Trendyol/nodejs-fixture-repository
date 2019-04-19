@@ -7,6 +7,7 @@
   "license": "MIT",
   "scripts": {
     "test": "jest",
+    "fake": "ts-node src/faker/index.ts",
     "test:watch": "jest --watchAll",
     "build": "tsc",
     "prepublish": "yarn cov && yarn build",

@@ -39,15 +39,39 @@ export class Faker {
     if (interfaceType) {
       interfaceType.parameters.forEach(item => {
         const type = item.type;
-        let value: any;
-        if (this.isPrimitiveType(type)) {
-          value = this.generatePrimitiveTypeValue(type);
-          result = { ...result, [item.name]: value };
-        } else {
-          value = this.generateValuesForType(type);
-          result = { ...result, [item.name]: { ...value } };
-        }
+        const value = this.getValueForType(type);
+
+        result = { ...result, [item.name]: value };
       });
+    }
+
+    return result;
+  }
+
+  private getValueForType(type: string): any {
+    let value: any;
+    if (this.isPrimitiveType(type)) {
+      value = this.generatePrimitiveTypeValue(type);
+    } else if (this.isArrayType(type)) {
+      value = this.generateValuesForArrayType(type);
+    } else {
+      value = this.generateValuesForType(type);
+    }
+
+    return value;
+  }
+
+  private isArrayType(type: string): boolean {
+    return type.indexOf('[]') > -1;
+  }
+
+  private generateValuesForArrayType(type: string): any[] {
+    const result: any[] = [];
+    const baseType = type.split('[]')[0];
+    const rnd = Math.floor(Math.random() * 3) + 1;
+
+    for (let index = 0; index < rnd; index++) {
+      result.push(this.getValueForType(baseType));
     }
 
     return result;

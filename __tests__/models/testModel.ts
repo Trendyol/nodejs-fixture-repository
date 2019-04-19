@@ -15,3 +15,8 @@ export interface IUnion {
   union: string | number;
   nestedUnion: boolean | INested;
 }
+
+export interface IArrayType {
+  stringArray: string[];
+  nestedArray: INested[];
+}
