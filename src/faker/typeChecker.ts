@@ -15,7 +15,7 @@ export interface IType {
 export interface IParameter {
   name: string;
   type: string;
-  value: string;
+  value: string | number;
 }
 
 let checker: ts.TypeChecker;
@@ -64,12 +64,11 @@ function serializeMainSymbol(symbol: ts.Symbol, type: Type): IType {
 }
 
 function serializeSymbol(symbol: ts.Symbol): IParameter {
-  const type = checker.getTypeOfSymbolAtLocation(symbol, symbol.valueDeclaration!);
-
+  const type = checker.getTypeOfSymbolAtLocation(symbol, symbol.valueDeclaration!) as ts.LiteralType;
   return {
     name: symbol.getName(),
     type: checker.typeToString(type),
-    value: type.value
+    value: type.value as string | number
   };
 }
 
