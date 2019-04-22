@@ -14,10 +14,7 @@ export interface IInterfaceParameter {
 let checker: ts.TypeChecker;
 let output: IInterfaceType[];
 
-export function generateDocumentation(
-  fileNames: string[],
-  options: ts.CompilerOptions
-): IInterfaceType[] {
+export function generateDocumentation(fileNames: string[], options: ts.CompilerOptions): IInterfaceType[] {
   const program = ts.createProgram(fileNames, options);
 
   checker = program.getTypeChecker();
@@ -29,7 +26,7 @@ export function generateDocumentation(
       ts.forEachChild(sourceFile, visit);
     }
   }
-
+  fs.writeFileSync('classes.json', JSON.stringify(output, undefined, 4));
   return output;
 }
 
@@ -54,11 +51,11 @@ function serializeMainSymbol(symbol: ts.Symbol): IInterfaceType {
 }
 
 function serializeSymbol(symbol: ts.Symbol): IInterfaceParameter {
+  const type = checker.getTypeOfSymbolAtLocation(symbol, symbol.valueDeclaration!);
+
   return {
     name: symbol.getName(),
-    type: checker.typeToString(
-      checker.getTypeOfSymbolAtLocation(symbol, symbol.valueDeclaration!)
-    )
+    type: checker.typeToString(type)
   };
 }
 
@@ -76,8 +73,7 @@ function serialize(symbol: ts.Symbol) {
 
 function isNodeExported(node: ts.Node): boolean {
   return (
-    (ts.isInterfaceDeclaration(node) &&
-      ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Export) !== 0 ||
+    (ts.isInterfaceDeclaration(node) && ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Export) !== 0 ||
     (!!node.parent && node.parent.kind === ts.SyntaxKind.SourceFile)
   );
 }

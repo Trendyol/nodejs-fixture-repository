@@ -43,6 +43,6 @@ describe('Faker tests', () => {
     const result: IUnion = faker.fake('IUnion');
 
     expect(typeof result.union).toMatch(/(string|number|boolean)/g);
-    expect(typeof result.union).toMatch(/(object|boolean)/g);
+    expect(typeof result.nestedUnion).toMatch(/(object|boolean)/g);
   });
 });
