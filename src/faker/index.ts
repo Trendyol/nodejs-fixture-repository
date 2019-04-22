@@ -1,9 +1,9 @@
 import glob from 'glob';
-import { generateDocumentation, IInterfaceType } from './typeChecker';
+import { generateDocumentation, IType } from './typeChecker';
 import { ValueGeneratorBase } from './generators/valueGeneratorBase';
 
 export class Faker {
-  private container: IInterfaceType[] = [];
+  private container: IType[] = [];
   private valueGenerator: ValueGeneratorBase;
 
   constructor(pattern: string) {
