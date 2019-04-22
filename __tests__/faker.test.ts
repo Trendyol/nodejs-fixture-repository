@@ -1,4 +1,4 @@
-import { IPrimitives, INested, IArrayType, IUnion } from './models/testModel';
+import { IPrimitives, INested, IArrayType, IUnion, IEnumType, Enum1, Enum2 } from './models/testModel';
 import { Faker } from '../src/faker';
 import { isArray } from 'util';
 
@@ -44,5 +44,15 @@ describe('Faker tests', () => {
 
     expect(typeof result.union).toMatch(/(string|number|boolean)/g);
     expect(typeof result.nestedUnion).toMatch(/(object|boolean)/g);
+  });
+
+  it('should fake enum types correctly', () => {
+    const result: IEnumType = faker.fake('IEnumType');
+    console.log(result);
+
+    expect(result.enum1).toBeDefined();
+    expect(result.enum2).toBeDefined();
+    expect(Object.values(Enum1)).toContain(result.enum1);
+    expect(Object.values(Enum2)).toContain(result.enum2);
   });
 });

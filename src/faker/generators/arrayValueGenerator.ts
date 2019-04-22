@@ -1,4 +1,3 @@
-import { IInterfaceType } from '../typeChecker';
 import { getRandomNumberBetween } from '../utils/getRandomNumberBetween';
 import { IValueGenerator } from '../interfaces/valueGenerator';
 import { ValueGeneratorBase } from './valueGeneratorBase';

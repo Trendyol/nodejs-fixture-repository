@@ -1,20 +1,27 @@
 import * as ts from 'typescript';
 import * as fs from 'fs';
 
-export interface IInterfaceType {
-  name: string;
-  parameters: IInterfaceParameter[];
+export enum Type {
+  Interface,
+  Enum
 }
 
-export interface IInterfaceParameter {
+export interface IType {
+  name: string;
+  type: Type;
+  parameters: IParameter[];
+}
+
+export interface IParameter {
   name: string;
   type: string;
+  value: string;
 }
 
 let checker: ts.TypeChecker;
-let output: IInterfaceType[];
+let output: IType[];
 
-export function generateDocumentation(fileNames: string[], options: ts.CompilerOptions): IInterfaceType[] {
+export function generateDocumentation(fileNames: string[], options: ts.CompilerOptions): IType[] {
   const program = ts.createProgram(fileNames, options);
 
   checker = program.getTypeChecker();
@@ -38,31 +45,50 @@ function visit(node: ts.Node) {
   if (ts.isInterfaceDeclaration(node) && node.name) {
     const symbol = checker.getSymbolAtLocation(node.name);
     if (symbol) {
-      output.push(serialize(symbol));
+      output.push(serializeInterface(symbol));
+    }
+  } else if (ts.isEnumDeclaration(node) && node.name) {
+    const symbol = checker.getSymbolAtLocation(node.name);
+    if (symbol) {
+      output.push(serializeEnum(symbol));
     }
   }
 }
 
-function serializeMainSymbol(symbol: ts.Symbol): IInterfaceType {
+function serializeMainSymbol(symbol: ts.Symbol, type: Type): IType {
   return {
+    type,
     name: symbol.getName(),
     parameters: []
   };
 }
 
-function serializeSymbol(symbol: ts.Symbol): IInterfaceParameter {
+function serializeSymbol(symbol: ts.Symbol): IParameter {
   const type = checker.getTypeOfSymbolAtLocation(symbol, symbol.valueDeclaration!);
 
   return {
     name: symbol.getName(),
-    type: checker.typeToString(type)
+    type: checker.typeToString(type),
+    value: type.value
   };
 }
 
-function serialize(symbol: ts.Symbol) {
-  const details = serializeMainSymbol(symbol);
+function serializeInterface(symbol: ts.Symbol) {
+  const details = serializeMainSymbol(symbol, Type.Interface);
   if (symbol.members) {
     symbol.members.forEach(member => {
+      if (details.parameters) {
+        details.parameters.push(serializeSymbol(member));
+      }
+    });
+  }
+  return details;
+}
+
+function serializeEnum(symbol: ts.Symbol) {
+  const details = serializeMainSymbol(symbol, Type.Enum);
+  if (symbol.exports) {
+    symbol.exports.forEach(member => {
       if (details.parameters) {
         details.parameters.push(serializeSymbol(member));
       }
