@@ -48,7 +48,6 @@ describe('Faker tests', () => {
 
   it('should fake enum types correctly', () => {
     const result: IEnumType = faker.fake('IEnumType');
-    console.log(result);
 
     expect(result.enum1).toBeDefined();
     expect(result.enum2).toBeDefined();
