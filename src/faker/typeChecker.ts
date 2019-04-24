@@ -33,7 +33,6 @@ export function generateDocumentation(fileNames: string[], options: ts.CompilerO
       ts.forEachChild(sourceFile, visit);
     }
   }
-  fs.writeFileSync('classes.json', JSON.stringify(output, undefined, 4));
   return output;
 }
 
