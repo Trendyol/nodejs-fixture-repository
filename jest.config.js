@@ -11,5 +11,6 @@ module.exports = {
     'ts-jest': {
       diagnostics: false
     }
-  }
+  },
+  setupFiles: ['<rootDir>/jestSetup.js']
 };

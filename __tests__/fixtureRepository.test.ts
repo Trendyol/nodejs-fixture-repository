@@ -3,10 +3,6 @@ import fr from '../src/fixtureRepository';
 import { isArray } from 'util';
 
 describe('Faker tests', () => {
-  beforeAll(() => {
-    fr.setup('**/*Model.ts');
-  });
-
   it('should fake primitive types correctly', () => {
     const result: IPrimitives = fr.create('IPrimitives');
 
