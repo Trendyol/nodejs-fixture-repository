@@ -1,1 +1,1 @@
-export * from './fixtureRepository';
+export default './fixtureRepository';
