@@ -13,7 +13,7 @@ This package meant to be used for faking object values based on typescript types
 
 # How to use
 
-You need to create an instance of Faker. It takes a pattern for matching your model files. It uses glob npm package.
+You need to call setup method before with required options first. It takes a pattern for matching your model files. It uses glob npm package.
 
     const fr = require('fixture-repository');
 
@@ -21,4 +21,4 @@ You need to create an instance of Faker. It takes a pattern for matching your mo
 
     const result: IMyModel = fr.create('IMyModel');
 
-It walks through all matched files and extracts interfaces. For that reason, it is advised that you create a global faker object before you run your tests.
+It walks through all matched files and extracts interfaces. For that reason, it is advised that you call setup function once before running your tests. e.g in Jest setup file.
