@@ -3,16 +3,17 @@ import { generateDocumentation, IType } from './checkers/typeChecker';
 import { ValueGeneratorBase } from './generators/valueGeneratorBase';
 
 export default class FixtureRepository {
+  private static container: IType[] = [];
+  private static valueGenerator: ValueGeneratorBase;
+
   public static setup(pattern: string) {
     const fileNames = glob.sync(pattern);
-    const container: IType[] = generateDocumentation(fileNames, {});
-    const generator: ValueGeneratorBase = new ValueGeneratorBase(container);
 
-    global.___container = container;
-    global.___generator = generator;
+    this.container = generateDocumentation(fileNames, {});
+    this.valueGenerator = new ValueGeneratorBase(this.container);
   }
 
   public static create(type: string): any {
-    return global.___generator.generate(type);
+    return this.valueGenerator.generate(type);
   }
 }
