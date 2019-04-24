@@ -1,1 +1,3 @@
-export default './fixtureRepository';
+import fr from './fixtureRepository';
+
+export default fr;
