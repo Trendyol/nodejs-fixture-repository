@@ -1,6 +1,6 @@
 import { IValueGenerator } from '../interfaces/valueGenerator';
-import { IParameter, IType, Type } from '../typeChecker';
-import { TypeResolver } from './../resolvers/typeResolver';
+import { IParameter, IType, Type } from '../checkers/typeChecker';
+import { TypeResolver } from '../resolvers/typeResolver';
 import { getRandomNumberBetween } from '../utils/getRandomNumberBetween';
 
 export class ValueGeneratorBase {

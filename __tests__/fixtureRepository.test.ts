@@ -1,16 +1,14 @@
 import { IPrimitives, INested, IArrayType, IUnion, IEnumType, Enum1, Enum2 } from './models/testModel';
-import { Faker } from '../src/faker';
+import fr from '../src/fixtureRepository';
 import { isArray } from 'util';
 
 describe('Faker tests', () => {
-  let faker: Faker;
-
   beforeAll(() => {
-    faker = new Faker('**/*Model.ts');
+    fr.setup('**/*Model.ts');
   });
 
   it('should fake primitive types correctly', () => {
-    const result: IPrimitives = faker.fake('IPrimitives');
+    const result: IPrimitives = fr.create('IPrimitives');
 
     expect(typeof result.string).toBe('string');
     expect(typeof result.number).toBe('number');
@@ -20,7 +18,7 @@ describe('Faker tests', () => {
   });
 
   it('should fake nested types correctly', () => {
-    const result: INested = faker.fake('INested');
+    const result: INested = fr.create('INested');
 
     expect(typeof result.string).toBe('string');
     expect(typeof result.primitives.string).toBe('string');
@@ -31,7 +29,7 @@ describe('Faker tests', () => {
   });
 
   it('should fake array types correctly', () => {
-    const result: IArrayType = faker.fake('IArrayType');
+    const result: IArrayType = fr.create('IArrayType');
 
     expect(isArray(result.stringArray)).toBeTruthy();
     expect(isArray(result.nestedArray)).toBeTruthy();
@@ -40,21 +38,21 @@ describe('Faker tests', () => {
   });
 
   it('should fake union types correctly', () => {
-    const result: IUnion = faker.fake('IUnion');
+    const result: IUnion = fr.create('IUnion');
 
     expect(typeof result.union).toMatch(/(string|number|boolean)/g);
     expect(typeof result.nestedUnion).toMatch(/(object|boolean)/g);
   });
 
   it('should fake enum types correctly', () => {
-    const result: Enum1 = faker.fake('Enum1');
+    const result: Enum1 = fr.create('Enum1');
 
     expect(result).toBeDefined();
     expect(Object.values(Enum1)).toContain(result);
   });
 
   it('should fake types with enums correctly', () => {
-    const result: IEnumType = faker.fake('IEnumType');
+    const result: IEnumType = fr.create('IEnumType');
 
     expect(result.enum1).toBeDefined();
     expect(result.enum2).toBeDefined();

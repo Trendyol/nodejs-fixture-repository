@@ -3,7 +3,7 @@ import { ArrayValueGenerator } from '../generators/arrayValueGenerator';
 import { PrimitiveValueGenerator } from '../generators/primitiveValueGenerator';
 import { UnionValueGenerator } from '../generators/unionValueGenerator';
 import { isUnion, isPrimitive, isArray } from '../utils/typeUtils';
-import { ValueGeneratorBase } from './../generators/valueGeneratorBase';
+import { ValueGeneratorBase } from '../generators/valueGeneratorBase';
 
 export class TypeResolver {
   private arrayGenerator: ArrayValueGenerator;

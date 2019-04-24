@@ -1,9 +1,9 @@
 {
-  "name": "@trendyol/faker",
+  "name": "fixture-repository",
   "version": "1.1.1",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "author": "ismail hakki tekin <ismail.tekin@trendyol.com>",
+  "author": "ismail hakki tekin <ihakkitekin@gmail.com>",
   "license": "MIT",
   "scripts": {
     "test": "jest",
