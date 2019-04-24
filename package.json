@@ -4,6 +4,11 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "author": "ismail hakki tekin <ihakkitekin@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ihakkitekin/fixture-repository"
+  },
+  "homepage": "https://github.com/ihakkitekin/fixture-repository",
   "license": "MIT",
   "scripts": {
     "test": "jest",
