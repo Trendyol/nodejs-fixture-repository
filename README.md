@@ -8,16 +8,17 @@ This package meant to be used for faking object values based on typescript types
 
 # Types
 
-    fake(str:  string):  any;
+    setup(options?: any):  void;
+    create(str:  string):  any;
 
 # How to use
 
 You need to create an instance of Faker. It takes a pattern for matching your model files. It uses glob npm package.
 
-    const { Faker } = require('@trendyol/faker');
+    const fr = require('fixture-repository');
 
-    const faker = new Faker('**/models/**');
+    fr.setup('**/models/**');
 
-    const result: IMyModel = faker.fake('IMyModel');
+    const result: IMyModel = fr.create('IMyModel');
 
 It walks through all matched files and extracts interfaces. For that reason, it is advised that you create a global faker object before you run your tests.
