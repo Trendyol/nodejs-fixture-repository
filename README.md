@@ -12,13 +12,20 @@ This package meant to be used for faking object values based on typescript types
     create(str:  string):  any;
 
 # How to use
+Assume you have a *personModel.ts* file and interface declaration like this:
 
-You need to call setup method before with required options first. It takes a pattern for matching your model files. It uses glob npm package.
+    interface IPerson {
+        name: string;
+        surname: string;
+        age: number;
+    }   
 
-    const fr = require('fixture-repository');
+You need to call setup method before with required options first. It takes a pattern for matching your model files. It uses glob for that.
 
-    fr.setup('**/models/**');
+    import fr from 'fixture-repository';
 
-    const result: IMyModel = fr.create('IMyModel');
+    fr.setup('**/*Model.ts');
 
-It walks through all matched files and extracts interfaces. For that reason, it is advised that you call setup function once before running your tests. e.g in Jest setup file.
+    const person: IPerson = fr.create('IPerson');
+
+It would generate required properties.It walks through all matched files and extracts interfaces. For that reason, it is advised that you call setup function once before running your tests. e.g in Jest setup file.
