@@ -3,7 +3,7 @@ import fr from '../src/fixtureRepository';
 import { isArray } from 'util';
 
 describe('Faker tests', () => {
-  it('should fake primitive types correctly', () => {
+  it('should fake types with primitives  correctly', () => {
     const result: IPrimitives = fr.create('IPrimitives');
 
     expect(typeof result.string).toBe('string');
@@ -54,5 +54,20 @@ describe('Faker tests', () => {
     expect(result.enum2).toBeDefined();
     expect(Object.values(Enum1)).toContain(result.enum1);
     expect(Object.values(Enum2)).toContain(result.enum2);
+  });
+
+  it('should fake array types correctly', () => {
+    const result: INested[] = fr.create('INested[]');
+
+    expect(isArray(result)).toBeTruthy();
+    expect(result.length).toBeGreaterThan(0);
+  });
+
+  it('should fake primitive types correctly', () => {
+    const stringResult: string = fr.create('string');
+    const booleanResult: boolean = fr.create('boolean');
+
+    expect(typeof stringResult).toBe('string');
+    expect(typeof booleanResult).toBe('boolean');
   });
 });

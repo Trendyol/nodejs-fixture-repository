@@ -31,6 +31,8 @@ export class ValueGeneratorBase {
         const rnd = getRandomNumberBetween(0, interfaceType.parameters.length);
         result = interfaceType.parameters[rnd].value;
       }
+    } else {
+      result = this.resolveAndGenerate(type);
     }
 
     return result;
