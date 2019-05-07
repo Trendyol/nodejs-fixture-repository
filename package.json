@@ -6,9 +6,9 @@
   "author": "ismail hakki tekin <ihakkitekin@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ihakkitekin/fixture-repository"
+    "url": "https://github.com/Trendyol/nodejs-fixture-repository"
   },
-  "homepage": "https://github.com/ihakkitekin/fixture-repository",
+  "homepage": "https://trendyol.github.io/",
   "license": "MIT",
   "scripts": {
     "test": "jest",
