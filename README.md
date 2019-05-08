@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/Trendyol/nodejs-fixture-repository.svg?style=svg)](https://circleci.com/gh/Trendyol/nodejs-fixture-repository)
+
 # Fixture Repository
 
 This package meant to be used for faking object values based on typescript types in order to remove burden of faking data in tests. At the moment it only supports interface declarations with primitive types and nested types. Support for enums, types and classes will come later.
