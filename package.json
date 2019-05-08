@@ -11,12 +11,10 @@
   "homepage": "https://trendyol.github.io/",
   "license": "MIT",
   "scripts": {
-    "test": "jest",
+    "test": "jest --coverage",
     "fake": "ts-node src/faker/index.ts",
     "test:watch": "jest --watchAll",
     "build": "tsc",
-    "prepublish": "yarn cov && yarn build",
-    "cov": "jest --coverage",
     "format": "prettier --write --loglevel=error \"src/**/*\" \"__test__/**/*\"",
     "lint": "tslint -c tslint.json --project tsconfig.json \"src/**/*\" \"__test__/**/*\""
   },
