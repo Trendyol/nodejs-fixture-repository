@@ -13,6 +13,7 @@ interface Container {
 interface Property {
   name: string;
   type: string;
+  isGeneric: boolean;
 }
 
 interface ContainerItem {
@@ -54,15 +55,19 @@ class TypeChecker {
     const name = _interface.getName();
     const properties: Property[] = [];
 
+    const typeParameters = _interface.getTypeParameters();
+
     _interface.getProperties().forEach(property => {
+      const type = property.getTypeNode()!.getText();
       properties.push({
-        type: property.getTypeNode()!.getText(),
-        name: property.getName()
+        type,
+        name: property.getName(),
+        isGeneric: property.getType().isTypeParameter()
       });
     });
 
-    _interface.getExtends().forEach(type => {
-      type
+    _interface.getExtends().forEach(extended => {
+      extended
         .getType()
         .getProperties()
         .forEach(property => {
@@ -71,7 +76,8 @@ class TypeChecker {
               .getValueDeclaration()!
               .getType()
               .getText(),
-            name: property.getName()
+            name: property.getName(),
+            isGeneric: property.getDeclaredType().isTypeParameter()
           });
         });
     });

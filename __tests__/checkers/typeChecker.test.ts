@@ -15,23 +15,28 @@ describe('type cheker tests', () => {
     const expectedProperties = [
       {
         name: 'string',
-        type: 'string'
+        type: 'string',
+        isGeneric: false
       },
       {
         name: 'number',
-        type: 'number'
+        type: 'number',
+        isGeneric: false
       },
       {
         name: 'boolean',
-        type: 'boolean'
+        type: 'boolean',
+        isGeneric: false
       },
       {
         name: 'null',
-        type: 'null'
+        type: 'null',
+        isGeneric: false
       },
       {
         name: 'undefined',
-        type: 'undefined'
+        type: 'undefined',
+        isGeneric: false
       }
     ];
 
@@ -51,27 +56,33 @@ describe('type cheker tests', () => {
     const expectedProperties = [
       {
         name: 'someProperty',
-        type: 'string'
+        type: 'string',
+        isGeneric: false
       },
       {
         name: 'string',
-        type: 'string'
+        type: 'string',
+        isGeneric: false
       },
       {
         name: 'number',
-        type: 'number'
+        type: 'number',
+        isGeneric: false
       },
       {
         name: 'boolean',
-        type: 'boolean'
+        type: 'boolean',
+        isGeneric: false
       },
       {
         name: 'null',
-        type: 'null'
+        type: 'null',
+        isGeneric: false
       },
       {
         name: 'undefined',
-        type: 'undefined'
+        type: 'undefined',
+        isGeneric: false
       }
     ];
 
@@ -87,11 +98,12 @@ describe('type cheker tests', () => {
     expect(result.items[0].properties).toEqual(expectedProperties);
   });
 
-  it('should create interface properties correctly when extends', () => {
+  it('should create interface properties correctly with custom interface properties', () => {
     const expectedProperties = [
       {
         name: 'primitives',
-        type: 'Primitives'
+        type: 'Primitives',
+        isGeneric: false
       }
     ];
 
@@ -103,6 +115,80 @@ describe('type cheker tests', () => {
 
     expect(result.items.length).toBe(1);
     expect(result.items[0].name).toBe('WithAnotherInterface');
+    expect(result.items[0].type).toBe(Declaration.Interface);
+    expect(result.items[0].properties).toEqual(expectedProperties);
+  });
+
+  it('should create interface properties correctly with array properties', () => {
+    const expectedProperties = [
+      {
+        name: 'stringArray',
+        type: 'string[]',
+        isGeneric: false
+      },
+      {
+        name: 'primitivesArray',
+        type: 'Primitives[]',
+        isGeneric: false
+      }
+    ];
+
+    files = glob.sync('*/*/interfaceWithArrayPropertiesModel.ts');
+
+    const typeChecker = new TypeChecker(files);
+
+    const result: Container = typeChecker.generateContainer();
+
+    expect(result.items.length).toBe(1);
+    expect(result.items[0].name).toBe('ArrayProperties');
+    expect(result.items[0].type).toBe(Declaration.Interface);
+    expect(result.items[0].properties).toEqual(expectedProperties);
+  });
+
+  it('should create interface properties correctly with generic signature', () => {
+    const expectedProperties = [
+      {
+        name: 'model',
+        type: 'T',
+        isGeneric: true
+      }
+    ];
+
+    files = glob.sync('*/*/genericInterfaceModel.ts');
+
+    const typeChecker = new TypeChecker(files);
+
+    const result: Container = typeChecker.generateContainer();
+
+    expect(result.items.length).toBe(1);
+    expect(result.items[0].name).toBe('GenericModel');
+    expect(result.items[0].type).toBe(Declaration.Interface);
+    expect(result.items[0].properties).toEqual(expectedProperties);
+  });
+
+  it('should create interface properties correctly with generic signature', () => {
+    const expectedProperties = [
+      {
+        name: 'string',
+        type: 'string',
+        isGeneric: false
+      },
+      {
+        name: 'model',
+        type: 'string',
+        isGeneric: true
+      }
+    ];
+
+    files = glob.sync('*/*/interfaceExtendsGenericInterfaceModel.ts');
+
+    const typeChecker = new TypeChecker(files);
+
+    const result: Container = typeChecker.generateContainer();
+
+    console.log(result.items[0].properties)
+    expect(result.items.length).toBe(1);
+    expect(result.items[0].name).toBe('ExtendsGenericInterface');
     expect(result.items[0].type).toBe(Declaration.Interface);
     expect(result.items[0].properties).toEqual(expectedProperties);
   });
