@@ -56,7 +56,7 @@ class TypeChecker {
 
     _interface.getProperties().forEach(property => {
       properties.push({
-        type: property.getType().getText(),
+        type: property.getTypeNode()!.getText(),
         name: property.getName()
       });
     });

@@ -86,4 +86,24 @@ describe('type cheker tests', () => {
     expect(result.items[0].type).toBe(Declaration.Interface);
     expect(result.items[0].properties).toEqual(expectedProperties);
   });
+
+  it('should create interface properties correctly when extends', () => {
+    const expectedProperties = [
+      {
+        name: 'primitives',
+        type: 'Primitives'
+      }
+    ];
+
+    files = glob.sync('*/*/interfaceWithAnotherInterfaceModel.ts');
+
+    const typeChecker = new TypeChecker(files);
+
+    const result: Container = typeChecker.generateContainer();
+
+    expect(result.items.length).toBe(1);
+    expect(result.items[0].name).toBe('WithAnotherInterface');
+    expect(result.items[0].type).toBe(Declaration.Interface);
+    expect(result.items[0].properties).toEqual(expectedProperties);
+  });
 });
