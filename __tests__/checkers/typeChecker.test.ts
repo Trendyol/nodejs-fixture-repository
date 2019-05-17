@@ -230,7 +230,7 @@ describe('type cheker tests', () => {
     expect(result.items[0].properties).toEqual(expectedProperties);
   });
 
-  it.only('should create interface properties correctly with intersect properties', () => {
+  it('should create interface properties correctly with intersect properties', () => {
     const expectedProperties = [
       {
         name: 'union',

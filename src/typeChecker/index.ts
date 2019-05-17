@@ -1,5 +1,5 @@
 import { Project, InterfaceDeclaration } from 'ts-morph';
-import { getTypeArgumentsOfExtendedType } from './helpers';
+import { getPropertiesOfInterfaceDeclaration, getExtendedPropertiesOfInterfaceDeclaration } from './helpers';
 
 enum Declaration {
   Interface,
@@ -11,7 +11,7 @@ interface Container {
   items: ContainerItem[];
 }
 
-interface Property {
+export interface Property {
   name: string;
   type: string;
   isGeneric: boolean;
@@ -53,37 +53,16 @@ class TypeChecker {
   }
 
   private mapInterfaceProperties(_interface: InterfaceDeclaration): ContainerItem {
+    let properties: Property[] = [];
+
     const type = Declaration.Interface;
     const name = _interface.getName();
-    const properties: Property[] = [];
     const typeParameters = _interface.getTypeParameters().map(param => param.getText());
 
-    _interface.getProperties().forEach(property => {
-      const typeName = property.getTypeNode()!.getText();
-      properties.push({
-        type: typeName,
-        name: property.getName(),
-        isGeneric: property.getType().isTypeParameter()
-      });
-    });
-
-    _interface.getExtends().forEach(extended => {
-      const typeArguments = getTypeArgumentsOfExtendedType(extended);
-
-      extended
-        .getType()
-        .getProperties()
-        .forEach(property => {
-          const propertyType = property.getValueDeclaration()!.getType();
-          const propertyTypeName = propertyType.getText();
-
-          properties.push({
-            type: typeArguments[propertyTypeName] || propertyTypeName,
-            name: property.getName(),
-            isGeneric: propertyType.isTypeParameter()
-          });
-        });
-    });
+    properties = properties.concat(
+      getPropertiesOfInterfaceDeclaration(_interface),
+      getExtendedPropertiesOfInterfaceDeclaration(_interface)
+    );
 
     return { type, name, properties, typeParameters };
   }
