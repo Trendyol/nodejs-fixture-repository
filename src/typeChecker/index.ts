@@ -21,6 +21,7 @@ interface ContainerItem {
   type: Declaration;
   name: string;
   properties: Property[];
+  typeParameters: string[];
 }
 
 class TypeChecker {
@@ -84,7 +85,7 @@ class TypeChecker {
         });
     });
 
-    return { type, name, properties };
+    return { type, name, properties, typeParameters };
   }
 }
 

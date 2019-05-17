@@ -49,6 +49,7 @@ describe('type cheker tests', () => {
     expect(result.items.length).toBe(1);
     expect(result.items[0].name).toBe('Primitives');
     expect(result.items[0].type).toBe(Declaration.Interface);
+    expect(result.items[0].typeParameters).toHaveLength(0);
     expect(result.items[0].properties).toEqual(expectedProperties);
   });
 
@@ -95,6 +96,7 @@ describe('type cheker tests', () => {
     expect(result.items.length).toBe(1);
     expect(result.items[0].name).toBe('ExtendsPrimitives');
     expect(result.items[0].type).toBe(Declaration.Interface);
+    expect(result.items[0].typeParameters).toHaveLength(0);
     expect(result.items[0].properties).toEqual(expectedProperties);
   });
 
@@ -116,6 +118,7 @@ describe('type cheker tests', () => {
     expect(result.items.length).toBe(1);
     expect(result.items[0].name).toBe('WithAnotherInterface');
     expect(result.items[0].type).toBe(Declaration.Interface);
+    expect(result.items[0].typeParameters).toHaveLength(0);
     expect(result.items[0].properties).toEqual(expectedProperties);
   });
 
@@ -142,6 +145,7 @@ describe('type cheker tests', () => {
     expect(result.items.length).toBe(1);
     expect(result.items[0].name).toBe('ArrayProperties');
     expect(result.items[0].type).toBe(Declaration.Interface);
+    expect(result.items[0].typeParameters).toHaveLength(0);
     expect(result.items[0].properties).toEqual(expectedProperties);
   });
 
@@ -163,6 +167,7 @@ describe('type cheker tests', () => {
     expect(result.items.length).toBe(1);
     expect(result.items[0].name).toBe('GenericModel');
     expect(result.items[0].type).toBe(Declaration.Interface);
+    expect(result.items[0].typeParameters).toHaveLength(1);
     expect(result.items[0].properties).toEqual(expectedProperties);
   });
 
@@ -189,6 +194,71 @@ describe('type cheker tests', () => {
     expect(result.items.length).toBe(1);
     expect(result.items[0].name).toBe('ExtendsGenericInterface');
     expect(result.items[0].type).toBe(Declaration.Interface);
+    expect(result.items[0].typeParameters).toHaveLength(0);
+    expect(result.items[0].properties).toEqual(expectedProperties);
+  });
+
+  it('should create interface properties correctly with union properties', () => {
+    const expectedProperties = [
+      {
+        name: 'union',
+        type: 'string | number',
+        isGeneric: false
+      },
+      {
+        name: 'union2',
+        type: 'Primitives | ArrayProperties',
+        isGeneric: false
+      },
+      {
+        name: 'union3',
+        type: 'string | boolean | Primitives',
+        isGeneric: false
+      }
+    ];
+
+    files = glob.sync('*/*/interfaceWithUnionProperties.ts');
+
+    const typeChecker = new TypeChecker(files);
+
+    const result: Container = typeChecker.generateContainer();
+
+    expect(result.items.length).toBe(1);
+    expect(result.items[0].name).toBe('WithUnionProperties');
+    expect(result.items[0].type).toBe(Declaration.Interface);
+    expect(result.items[0].typeParameters).toHaveLength(0);
+    expect(result.items[0].properties).toEqual(expectedProperties);
+  });
+
+  it.only('should create interface properties correctly with intersect properties', () => {
+    const expectedProperties = [
+      {
+        name: 'union',
+        type: 'string & number',
+        isGeneric: false
+      },
+      {
+        name: 'union2',
+        type: 'Primitives & ArrayProperties',
+        isGeneric: false
+      },
+      {
+        name: 'union3',
+        type: 'string & boolean & Primitives',
+        isGeneric: false
+      }
+    ];
+
+    files = glob.sync('*/*/interfaceWithIntersectProperties.ts');
+
+    const typeChecker = new TypeChecker(files);
+
+    const result: Container = typeChecker.generateContainer();
+
+    expect(result.items.length).toBe(1);
+    expect(result.items[0].name).toBe('WithIntersectProperties');
+    expect(result.items[0].type).toBe(Declaration.Interface);
+    expect(result.items[0].typeParameters).toHaveLength(0);
     expect(result.items[0].properties).toEqual(expectedProperties);
   });
 });
