@@ -1,4 +1,5 @@
 import { Project, InterfaceDeclaration } from 'ts-morph';
+import { getTypeArgumentsOfExtendedType } from './helpers';
 
 enum Declaration {
   Interface,
@@ -54,30 +55,31 @@ class TypeChecker {
     const type = Declaration.Interface;
     const name = _interface.getName();
     const properties: Property[] = [];
-
-    const typeParameters = _interface.getTypeParameters();
+    const typeParameters = _interface.getTypeParameters().map(param => param.getText());
 
     _interface.getProperties().forEach(property => {
-      const type = property.getTypeNode()!.getText();
+      const typeName = property.getTypeNode()!.getText();
       properties.push({
-        type,
+        type: typeName,
         name: property.getName(),
         isGeneric: property.getType().isTypeParameter()
       });
     });
 
     _interface.getExtends().forEach(extended => {
+      const typeArguments = getTypeArgumentsOfExtendedType(extended);
+
       extended
         .getType()
         .getProperties()
         .forEach(property => {
+          const propertyType = property.getValueDeclaration()!.getType();
+          const propertyTypeName = propertyType.getText();
+
           properties.push({
-            type: property
-              .getValueDeclaration()!
-              .getType()
-              .getText(),
+            type: typeArguments[propertyTypeName] || propertyTypeName,
             name: property.getName(),
-            isGeneric: property.getDeclaredType().isTypeParameter()
+            isGeneric: propertyType.isTypeParameter()
           });
         });
     });

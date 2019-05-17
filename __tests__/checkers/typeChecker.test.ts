@@ -175,7 +175,7 @@ describe('type cheker tests', () => {
       },
       {
         name: 'model',
-        type: 'string',
+        type: 'number',
         isGeneric: true
       }
     ];
@@ -186,7 +186,6 @@ describe('type cheker tests', () => {
 
     const result: Container = typeChecker.generateContainer();
 
-    console.log(result.items[0].properties)
     expect(result.items.length).toBe(1);
     expect(result.items[0].name).toBe('ExtendsGenericInterface');
     expect(result.items[0].type).toBe(Declaration.Interface);
