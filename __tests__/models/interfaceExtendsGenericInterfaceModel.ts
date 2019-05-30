@@ -1,5 +1,5 @@
 import { GenericModel } from './genericInterfaceModel';
 
-export interface ExtendsGenericInterface extends GenericModel<number> {
+export interface ExtendsGenericInterface extends GenericModel<number, string> {
   string: string;
 }

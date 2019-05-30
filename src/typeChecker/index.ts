@@ -15,7 +15,7 @@ export interface Property {
   isGeneric: boolean;
 }
 
-interface ContainerItem {
+export interface ContainerItem {
   type: Declaration;
   name: string;
   properties: Property[];

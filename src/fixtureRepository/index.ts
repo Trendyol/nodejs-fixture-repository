@@ -1,19 +1,21 @@
 import glob from 'glob';
-import { generateDocumentation, IType } from './checkers/typeChecker';
 import { ValueGeneratorBase } from './generators/valueGeneratorBase';
+import { TypeChecker, ContainerItem, Container } from '../typeChecker';
 
 export default class FixtureRepository {
-  private static container: IType[] = [];
   private static valueGenerator: ValueGeneratorBase;
+  private static container: Container;
 
   public static setup(pattern: string) {
     const fileNames = glob.sync(pattern);
 
-    this.container = generateDocumentation(fileNames, {});
+    const typeChecker = new TypeChecker(fileNames);
+
+    this.container = typeChecker.generateContainer();
     this.valueGenerator = new ValueGeneratorBase(this.container);
   }
 
   public static create(type: string): any {
-    return this.valueGenerator.generate(type);
+    return this.valueGenerator.resolveAndGenerate(type);
   }
 }

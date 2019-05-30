@@ -3,12 +3,14 @@ import { Property } from '..';
 
 export function getTypeArgumentsOfExtendedType(extendedType: ExpressionWithTypeArguments) {
   const mappedTypes: { [key: string]: string } = {};
-  const argumentBaseTypes: string[] = extendedType
-    .getType()
-    .getSymbol()!
-    .getDeclaredType()
-    .getTypeArguments()
-    .map(argument => argument.getText());
+  const symbol = extendedType.getType().getSymbol();
+
+  const argumentBaseTypes: string[] = symbol
+    ? symbol
+        .getDeclaredType()
+        .getTypeArguments()
+        .map(argument => argument.getText())
+    : [];
 
   const argumentGivenTypes: string[] = extendedType.getTypeArguments().map(typeArgument => typeArgument.getText());
 

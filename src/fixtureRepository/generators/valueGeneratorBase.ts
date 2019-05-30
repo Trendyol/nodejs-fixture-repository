@@ -1,13 +1,13 @@
 import { IValueGenerator } from '../interfaces/valueGenerator';
-import { IParameter, IType, Type } from '../checkers/typeChecker';
 import { TypeResolver } from '../resolvers/typeResolver';
 import { getRandomNumberBetween } from '../utils/getRandomNumberBetween';
+import { ContainerItem, Declaration, Property, Container } from '../../typeChecker';
 
 export class ValueGeneratorBase {
-  private container: IType[];
+  private container: Container;
   private typeResolver: TypeResolver;
 
-  constructor(container: IType[]) {
+  constructor(container: Container) {
     this.container = container;
     this.typeResolver = new TypeResolver(this);
 
@@ -17,23 +17,23 @@ export class ValueGeneratorBase {
 
   public generate(type: string) {
     let result = {};
-    const interfaceType: IType | undefined = this.container.find(item => item.name === type);
+    const declaration: ContainerItem | undefined = this.container.find(item => item.name === type);
 
-    if (interfaceType) {
-      if (interfaceType.type === Type.Interface) {
-        interfaceType.parameters.forEach((item: IParameter) => {
-          const type = item.type;
-          const value = this.resolveAndGenerate(type);
-
+    if (declaration) {
+      if (declaration.type === Declaration.Interface) {
+        declaration.properties.forEach((item: Property) => {
+          const value = item.isGeneric ? item.type : this.resolveAndGenerate(item.type);
           result = { ...result, [item.name]: value };
         });
-      } else {
-        const rnd = getRandomNumberBetween(0, interfaceType.parameters.length);
-        result = interfaceType.parameters[rnd].value;
       }
-    } else {
-      result = this.resolveAndGenerate(type);
+      // else {
+      //   const rnd = getRandomNumberBetween(0, declaration.properties.length);
+      //   result = declaration.properties[rnd].value;
+      // }
     }
+    // else {
+    //   result = this.resolveAndGenerate(type);
+    // }
 
     return result;
   }
@@ -42,7 +42,7 @@ export class ValueGeneratorBase {
     const generator: IValueGenerator | undefined = this.typeResolver.resolve(type);
 
     if (generator) {
-      return generator.generate(type);
+      return generator.generate(type, this.container);
     }
 
     return this.generate(type);

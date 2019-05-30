@@ -1,3 +1,3 @@
-const fr = require('./src').default;
+const fr = require('./src/fixtureRepository').default;
 
 fr.setup('**/*Model.ts');
