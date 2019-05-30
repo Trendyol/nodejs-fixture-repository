@@ -46,11 +46,11 @@ describe('type cheker tests', () => {
 
     const result: Container = typeChecker.generateContainer();
 
-    expect(result.items.length).toBe(1);
-    expect(result.items[0].name).toBe('Primitives');
-    expect(result.items[0].type).toBe(Declaration.Interface);
-    expect(result.items[0].typeParameters).toHaveLength(0);
-    expect(result.items[0].properties).toEqual(expectedProperties);
+    expect(result.length).toBe(1);
+    expect(result[0].name).toBe('Primitives');
+    expect(result[0].type).toBe(Declaration.Interface);
+    expect(result[0].typeParameters).toHaveLength(0);
+    expect(result[0].properties).toEqual(expectedProperties);
   });
 
   it('should create interface properties correctly when extends', () => {
@@ -93,11 +93,11 @@ describe('type cheker tests', () => {
 
     const result: Container = typeChecker.generateContainer();
 
-    expect(result.items.length).toBe(1);
-    expect(result.items[0].name).toBe('ExtendsPrimitives');
-    expect(result.items[0].type).toBe(Declaration.Interface);
-    expect(result.items[0].typeParameters).toHaveLength(0);
-    expect(result.items[0].properties).toEqual(expectedProperties);
+    expect(result.length).toBe(1);
+    expect(result[0].name).toBe('ExtendsPrimitives');
+    expect(result[0].type).toBe(Declaration.Interface);
+    expect(result[0].typeParameters).toHaveLength(0);
+    expect(result[0].properties).toEqual(expectedProperties);
   });
 
   it('should create interface properties correctly with custom interface properties', () => {
@@ -115,11 +115,11 @@ describe('type cheker tests', () => {
 
     const result: Container = typeChecker.generateContainer();
 
-    expect(result.items.length).toBe(1);
-    expect(result.items[0].name).toBe('WithAnotherInterface');
-    expect(result.items[0].type).toBe(Declaration.Interface);
-    expect(result.items[0].typeParameters).toHaveLength(0);
-    expect(result.items[0].properties).toEqual(expectedProperties);
+    expect(result.length).toBe(1);
+    expect(result[0].name).toBe('WithAnotherInterface');
+    expect(result[0].type).toBe(Declaration.Interface);
+    expect(result[0].typeParameters).toHaveLength(0);
+    expect(result[0].properties).toEqual(expectedProperties);
   });
 
   it('should create interface properties correctly with array properties', () => {
@@ -142,11 +142,11 @@ describe('type cheker tests', () => {
 
     const result: Container = typeChecker.generateContainer();
 
-    expect(result.items.length).toBe(1);
-    expect(result.items[0].name).toBe('ArrayProperties');
-    expect(result.items[0].type).toBe(Declaration.Interface);
-    expect(result.items[0].typeParameters).toHaveLength(0);
-    expect(result.items[0].properties).toEqual(expectedProperties);
+    expect(result.length).toBe(1);
+    expect(result[0].name).toBe('ArrayProperties');
+    expect(result[0].type).toBe(Declaration.Interface);
+    expect(result[0].typeParameters).toHaveLength(0);
+    expect(result[0].properties).toEqual(expectedProperties);
   });
 
   it('should create interface properties correctly with generic signature', () => {
@@ -164,11 +164,11 @@ describe('type cheker tests', () => {
 
     const result: Container = typeChecker.generateContainer();
 
-    expect(result.items.length).toBe(1);
-    expect(result.items[0].name).toBe('GenericModel');
-    expect(result.items[0].type).toBe(Declaration.Interface);
-    expect(result.items[0].typeParameters).toHaveLength(1);
-    expect(result.items[0].properties).toEqual(expectedProperties);
+    expect(result.length).toBe(1);
+    expect(result[0].name).toBe('GenericModel');
+    expect(result[0].type).toBe(Declaration.Interface);
+    expect(result[0].typeParameters).toHaveLength(1);
+    expect(result[0].properties).toEqual(expectedProperties);
   });
 
   it('should create interface properties correctly with generic signature', () => {
@@ -191,11 +191,11 @@ describe('type cheker tests', () => {
 
     const result: Container = typeChecker.generateContainer();
 
-    expect(result.items.length).toBe(1);
-    expect(result.items[0].name).toBe('ExtendsGenericInterface');
-    expect(result.items[0].type).toBe(Declaration.Interface);
-    expect(result.items[0].typeParameters).toHaveLength(0);
-    expect(result.items[0].properties).toEqual(expectedProperties);
+    expect(result.length).toBe(1);
+    expect(result[0].name).toBe('ExtendsGenericInterface');
+    expect(result[0].type).toBe(Declaration.Interface);
+    expect(result[0].typeParameters).toHaveLength(0);
+    expect(result[0].properties).toEqual(expectedProperties);
   });
 
   it('should create interface properties correctly with union properties', () => {
@@ -223,11 +223,11 @@ describe('type cheker tests', () => {
 
     const result: Container = typeChecker.generateContainer();
 
-    expect(result.items.length).toBe(1);
-    expect(result.items[0].name).toBe('WithUnionProperties');
-    expect(result.items[0].type).toBe(Declaration.Interface);
-    expect(result.items[0].typeParameters).toHaveLength(0);
-    expect(result.items[0].properties).toEqual(expectedProperties);
+    expect(result.length).toBe(1);
+    expect(result[0].name).toBe('WithUnionProperties');
+    expect(result[0].type).toBe(Declaration.Interface);
+    expect(result[0].typeParameters).toHaveLength(0);
+    expect(result[0].properties).toEqual(expectedProperties);
   });
 
   it('should create interface properties correctly with intersect properties', () => {
@@ -255,10 +255,10 @@ describe('type cheker tests', () => {
 
     const result: Container = typeChecker.generateContainer();
 
-    expect(result.items.length).toBe(1);
-    expect(result.items[0].name).toBe('WithIntersectProperties');
-    expect(result.items[0].type).toBe(Declaration.Interface);
-    expect(result.items[0].typeParameters).toHaveLength(0);
-    expect(result.items[0].properties).toEqual(expectedProperties);
+    expect(result.length).toBe(1);
+    expect(result[0].name).toBe('WithIntersectProperties');
+    expect(result[0].type).toBe(Declaration.Interface);
+    expect(result[0].typeParameters).toHaveLength(0);
+    expect(result[0].properties).toEqual(expectedProperties);
   });
 });

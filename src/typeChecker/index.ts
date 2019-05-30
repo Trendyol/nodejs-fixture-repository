@@ -7,9 +7,7 @@ enum Declaration {
   Type
 }
 
-interface Container {
-  items: ContainerItem[];
-}
+type Container = ContainerItem[];
 
 export interface Property {
   name: string;
@@ -22,6 +20,7 @@ interface ContainerItem {
   name: string;
   properties: Property[];
   typeParameters: string[];
+  isGeneric: boolean;
 }
 
 class TypeChecker {
@@ -36,9 +35,7 @@ class TypeChecker {
   }
 
   public generateContainer(): Container {
-    const container = { items: this.getContainerItemsFromFiles() };
-
-    return container;
+    return this.getContainerItemsFromFiles();
   }
 
   private getContainerItemsFromFiles(): ContainerItem[] {
@@ -58,13 +55,14 @@ class TypeChecker {
     const type = Declaration.Interface;
     const name = _interface.getName();
     const typeParameters = _interface.getTypeParameters().map(param => param.getText());
+    const isGeneric = typeParameters.length > 0;
 
     properties = properties.concat(
       getPropertiesOfInterfaceDeclaration(_interface),
       getExtendedPropertiesOfInterfaceDeclaration(_interface)
     );
 
-    return { type, name, properties, typeParameters };
+    return { type, name, properties, typeParameters, isGeneric };
   }
 }
 
