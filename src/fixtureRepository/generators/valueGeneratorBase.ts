@@ -30,19 +30,25 @@ export class ValueGeneratorBase {
         result = declaration.properties[rnd].value;
       }
     } else {
-      result = this.resolveAndGenerate(type);
+      result = this.resolveAndGenerate(type, false);
     }
 
     return result;
   }
 
-  public resolveAndGenerate(type: string) {
+  public resolveAndGenerate(type: string, isKnownType: boolean = true) {
     const generator: IValueGenerator | undefined = this.typeResolver.resolve(type);
 
     if (generator) {
       return generator.generate(type, this.container);
     }
 
+    if (!isKnownType) return;
+
     return this.generate(type);
+  }
+
+  private isKnownType(type: string): boolean {
+    return true;
   }
 }

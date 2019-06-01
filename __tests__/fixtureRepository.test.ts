@@ -79,4 +79,10 @@ describe('Faker tests', () => {
     expect(typeof stringResult).toBe('string');
     expect(typeof booleanResult).toBe('boolean');
   });
+
+  it('should return undefined for not known type', () => {
+    const result: any = fr.create('SomeType');
+
+    expect(result).toBeUndefined();
+  });
 });
