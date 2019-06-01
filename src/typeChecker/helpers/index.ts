@@ -1,4 +1,4 @@
-import { ExpressionWithTypeArguments, InterfaceDeclaration, EnumDeclaration } from 'ts-morph';
+import { ExpressionWithTypeArguments, InterfaceDeclaration, EnumDeclaration, TypeFormatFlags } from 'ts-morph';
 import { Property } from '..';
 
 export function getTypeArgumentsOfExtendedType(extendedType: ExpressionWithTypeArguments) {
@@ -44,7 +44,7 @@ export function getExtendedPropertiesOfInterfaceDeclaration(_interface: Interfac
       .getProperties()
       .forEach(property => {
         const propertyType = property.getValueDeclaration()!.getType();
-        const propertyTypeName = propertyType.getText();
+        const propertyTypeName = propertyType.getText(undefined, TypeFormatFlags.InTypeAlias);
 
         properties.push({
           type: typeArguments[propertyTypeName] || propertyTypeName,
@@ -61,9 +61,10 @@ export function getMembersOfEnumDeclaration(_enum: EnumDeclaration) {
   const properties: Property[] = [];
 
   _enum.getMembers().forEach(member => {
-
     properties.push({
-      type: member.getType().getApparentType().getText(),
+      type: member
+        .getType()
+        .getText(undefined, TypeFormatFlags.InTypeAlias),
       name: member.getName(),
       isGeneric: member.getType().isTypeParameter(),
       value: member.getValue()

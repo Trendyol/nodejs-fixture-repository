@@ -286,19 +286,19 @@ describe('type cheker tests', () => {
     const expectedProperties = [
       {
         name: 'First',
-        type: 'Number',
+        type: 'EnumModel.First',
         isGeneric: false,
         value: 0
       },
       {
         name: 'Second',
-        type: 'Number',
+        type: 'EnumModel.Second',
         isGeneric: false,
         value: 1
       },
       {
         name: 'Third',
-        type: 'String',
+        type: 'EnumModel.Third',
         isGeneric: false,
         value: 'third'
       }
