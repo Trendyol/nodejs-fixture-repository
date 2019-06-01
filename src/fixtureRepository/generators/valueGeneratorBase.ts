@@ -25,15 +25,13 @@ export class ValueGeneratorBase {
           const value = item.isGeneric ? item.type : this.resolveAndGenerate(item.type);
           result = { ...result, [item.name]: value };
         });
+      } else {
+        const rnd = getRandomNumberBetween(0, declaration.properties.length);
+        result = declaration.properties[rnd].value;
       }
-      // else {
-      //   const rnd = getRandomNumberBetween(0, declaration.properties.length);
-      //   result = declaration.properties[rnd].value;
-      // }
+    } else {
+      result = this.resolveAndGenerate(type);
     }
-    // else {
-    //   result = this.resolveAndGenerate(type);
-    // }
 
     return result;
   }

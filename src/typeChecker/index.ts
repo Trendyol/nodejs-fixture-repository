@@ -1,18 +1,23 @@
-import { Project, InterfaceDeclaration } from 'ts-morph';
-import { getPropertiesOfInterfaceDeclaration, getExtendedPropertiesOfInterfaceDeclaration } from './helpers';
+import { Project, InterfaceDeclaration, EnumDeclaration } from 'ts-morph';
+import {
+  getPropertiesOfInterfaceDeclaration,
+  getExtendedPropertiesOfInterfaceDeclaration,
+  getMembersOfEnumDeclaration
+} from './helpers';
 
-enum Declaration {
+export enum Declaration {
   Interface,
   Enum,
   Type
 }
 
-type Container = ContainerItem[];
+export type Container = ContainerItem[];
 
 export interface Property {
   name: string;
   type: string;
   isGeneric: boolean;
+  value?: any;
 }
 
 export interface ContainerItem {
@@ -23,14 +28,13 @@ export interface ContainerItem {
   isGeneric: boolean;
 }
 
-class TypeChecker {
+export class TypeChecker {
   private project: Project;
   constructor(files: string[]) {
     this.project = new Project();
     this.project.addExistingSourceFiles(files);
 
     this.generateContainer = this.generateContainer.bind(this);
-    this.mapInterfaceProperties = this.mapInterfaceProperties.bind(this);
     this.getContainerItemsFromFiles = this.getContainerItemsFromFiles.bind(this);
   }
 
@@ -44,6 +48,7 @@ class TypeChecker {
 
     files.forEach(file => {
       file.getInterfaces().forEach(_interface => items.push(this.mapInterfaceProperties(_interface)));
+      file.getEnums().forEach(_enum => items.push(this.mapEnumMembers(_enum)));
     });
 
     return items;
@@ -64,6 +69,17 @@ class TypeChecker {
 
     return { type, name, properties, typeParameters, isGeneric };
   }
-}
 
-export { TypeChecker, Container, Declaration };
+  private mapEnumMembers(_enum: EnumDeclaration): ContainerItem {
+    let properties: Property[] = [];
+
+    const type = Declaration.Enum;
+    const name = _enum.getName();
+    const typeParameters: string[] = [];
+    const isGeneric = typeParameters.length > 0;
+
+    properties = properties.concat(getMembersOfEnumDeclaration(_enum));
+
+    return { type, name, properties, typeParameters, isGeneric };
+  }
+}

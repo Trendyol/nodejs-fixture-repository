@@ -41,43 +41,42 @@ describe('Faker tests', () => {
     expect(typeof result.nestedUnion).toMatch(/(object|boolean)/g);
   });
 
-  it.only('should fake generic types correctly', () => {
+  it('should fake generic types correctly', () => {
     const result: GenericModel<string, number> = fr.create('GenericModel<string, number>');
 
-    console.log(result);
     expect(typeof result.model0).toBe('boolean');
     expect(typeof result.model1).toBe('string');
     expect(typeof result.model2).toBe('number');
   });
 
-  // it('should fake enum types correctly', () => {
-  //   const result: Enum1 = fr.create('Enum1');
+  it('should fake enum types correctly', () => {
+    const result: Enum1 = fr.create('Enum1');
 
-  //   expect(result).toBeDefined();
-  //   expect(Object.values(Enum1)).toContain(result);
-  // });
+    expect(result).toBeDefined();
+    expect(Object.values(Enum1)).toContain(result);
+  });
 
-  // it('should fake types with enums correctly', () => {
-  //   const result: IEnumType = fr.create('IEnumType');
+  it('should fake types with enums correctly', () => {
+    const result: IEnumType = fr.create('IEnumType');
 
-  //   expect(result.enum1).toBeDefined();
-  //   expect(result.enum2).toBeDefined();
-  //   expect(Object.values(Enum1)).toContain(result.enum1);
-  //   expect(Object.values(Enum2)).toContain(result.enum2);
-  // });
+    expect(result.enum1).toBeDefined();
+    expect(result.enum2).toBeDefined();
+    expect(Object.values(Enum1)).toContain(result.enum1);
+    expect(Object.values(Enum2)).toContain(result.enum2);
+  });
 
-  // it('should fake array types correctly', () => {
-  //   const result: INested[] = fr.create('INested[]');
+  it('should fake array types correctly', () => {
+    const result: INested[] = fr.create('INested[]');
 
-  //   expect(isArray(result)).toBeTruthy();
-  //   expect(result.length).toBeGreaterThan(0);
-  // });
+    expect(isArray(result)).toBeTruthy();
+    expect(result.length).toBeGreaterThan(0);
+  });
 
-  // it('should fake primitive types correctly', () => {
-  //   const stringResult: string = fr.create('string');
-  //   const booleanResult: boolean = fr.create('boolean');
+  it('should fake primitive types correctly', () => {
+    const stringResult: string = fr.create('string');
+    const booleanResult: boolean = fr.create('boolean');
 
-  //   expect(typeof stringResult).toBe('string');
-  //   expect(typeof booleanResult).toBe('boolean');
-  // });
+    expect(typeof stringResult).toBe('string');
+    expect(typeof booleanResult).toBe('boolean');
+  });
 });

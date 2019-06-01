@@ -152,8 +152,18 @@ describe('type cheker tests', () => {
   it('should create interface properties correctly with generic signature', () => {
     const expectedProperties = [
       {
-        name: 'model',
+        name: 'model0',
+        type: 'boolean',
+        isGeneric: false
+      },
+      {
+        name: 'model1',
         type: 'T',
+        isGeneric: true
+      },
+      {
+        name: 'model2',
+        type: 'P',
         isGeneric: true
       }
     ];
@@ -167,7 +177,7 @@ describe('type cheker tests', () => {
     expect(result.length).toBe(1);
     expect(result[0].name).toBe('GenericModel');
     expect(result[0].type).toBe(Declaration.Interface);
-    expect(result[0].typeParameters).toHaveLength(1);
+    expect(result[0].typeParameters).toHaveLength(2);
     expect(result[0].properties).toEqual(expectedProperties);
   });
 
@@ -179,8 +189,18 @@ describe('type cheker tests', () => {
         isGeneric: false
       },
       {
-        name: 'model',
+        name: 'model0',
+        type: 'boolean',
+        isGeneric: false
+      },
+      {
+        name: 'model1',
         type: 'number',
+        isGeneric: true
+      },
+      {
+        name: 'model2',
+        type: 'string',
         isGeneric: true
       }
     ];
@@ -258,6 +278,41 @@ describe('type cheker tests', () => {
     expect(result.length).toBe(1);
     expect(result[0].name).toBe('WithIntersectProperties');
     expect(result[0].type).toBe(Declaration.Interface);
+    expect(result[0].typeParameters).toHaveLength(0);
+    expect(result[0].properties).toEqual(expectedProperties);
+  });
+
+  it('should create enum values correctly', () => {
+    const expectedProperties = [
+      {
+        name: 'First',
+        type: 'Number',
+        isGeneric: false,
+        value: 0
+      },
+      {
+        name: 'Second',
+        type: 'Number',
+        isGeneric: false,
+        value: 1
+      },
+      {
+        name: 'Third',
+        type: 'String',
+        isGeneric: false,
+        value: 'third'
+      }
+    ];
+
+    files = glob.sync('*/*/enumModel.ts');
+
+    const typeChecker = new TypeChecker(files);
+
+    const result: Container = typeChecker.generateContainer();
+
+    expect(result.length).toBe(1);
+    expect(result[0].name).toBe('EnumModel');
+    expect(result[0].type).toBe(Declaration.Enum);
     expect(result[0].typeParameters).toHaveLength(0);
     expect(result[0].properties).toEqual(expectedProperties);
   });
