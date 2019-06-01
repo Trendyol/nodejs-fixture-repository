@@ -62,9 +62,7 @@ export function getMembersOfEnumDeclaration(_enum: EnumDeclaration) {
 
   _enum.getMembers().forEach(member => {
     properties.push({
-      type: member
-        .getType()
-        .getText(undefined, TypeFormatFlags.InTypeAlias),
+      type: member.getType().getText(undefined, TypeFormatFlags.InTypeAlias),
       name: member.getName(),
       isGeneric: member.getType().isTypeParameter(),
       value: member.getValue()
