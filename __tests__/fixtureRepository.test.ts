@@ -1,6 +1,7 @@
 import { IPrimitives, INested, IArrayType, IUnion, IEnumType, Enum1, Enum2 } from './models/testModel';
 import fr from '../src/fixtureRepository';
 import { isArray } from 'util';
+import { GenericModel } from './models/genericInterfaceModel';
 
 describe('Faker tests', () => {
   it('should fake types with primitives  correctly', () => {
@@ -40,6 +41,14 @@ describe('Faker tests', () => {
     expect(typeof result.nestedUnion).toMatch(/(object|boolean)/g);
   });
 
+  it('should fake generic types correctly', () => {
+    const result: GenericModel<string, number> = fr.create('GenericModel<string, number>');
+
+    expect(typeof result.model0).toBe('boolean');
+    expect(typeof result.model1).toBe('string');
+    expect(typeof result.model2).toBe('number');
+  });
+
   it('should fake enum types correctly', () => {
     const result: Enum1 = fr.create('Enum1');
 
@@ -69,5 +78,11 @@ describe('Faker tests', () => {
 
     expect(typeof stringResult).toBe('string');
     expect(typeof booleanResult).toBe('boolean');
+  });
+
+  it('should return undefined for not known type', () => {
+    const result: any = fr.create('SomeType');
+
+    expect(result).toBeUndefined();
   });
 });

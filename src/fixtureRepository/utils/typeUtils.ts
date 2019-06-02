@@ -1,9 +1,5 @@
 import { PrimitiveType } from '../generators/primitiveValueGenerator';
 
-export function isArray(type: string): boolean {
-  return type.indexOf('[]') > -1;
-}
-
 export function isPrimitive(type: string): boolean {
   const typeToCheck = type.toLowerCase();
   return (
@@ -15,6 +11,18 @@ export function isPrimitive(type: string): boolean {
   );
 }
 
+export function isArray(type: string): boolean {
+  return type.includes('[]');
+}
+
 export function isUnion(type: string): boolean {
-  return type.indexOf('|') > -1;
+  return type.includes('|');
+}
+
+export function isIntersect(type: string): boolean {
+  return type.includes('&');
+}
+
+export function isGeneric(type: string): boolean {
+  return type.includes('<') && type.includes('>');
 }

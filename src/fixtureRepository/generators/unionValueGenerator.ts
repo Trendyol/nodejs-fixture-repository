@@ -1,6 +1,7 @@
 import { ValueGeneratorBase } from './valueGeneratorBase';
 import { getRandomNumberBetween } from '../utils/getRandomNumberBetween';
 import { IValueGenerator } from '../interfaces/valueGenerator';
+import { Container } from '../../typeChecker';
 
 export class UnionValueGenerator implements IValueGenerator {
   base: ValueGeneratorBase;
@@ -9,7 +10,7 @@ export class UnionValueGenerator implements IValueGenerator {
     this.base = base;
   }
 
-  public generate(type: string) {
+  public generate(type: string, container: Container) {
     const unionParts = type.split('|');
     const selectedUnionIndex = getRandomNumberBetween(0, unionParts.length);
 

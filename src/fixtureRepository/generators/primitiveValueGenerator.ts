@@ -1,6 +1,7 @@
 import { ValueGeneratorBase } from './valueGeneratorBase';
 import faker from 'faker';
 import { IValueGenerator } from '../interfaces/valueGenerator';
+import { Container } from '../../typeChecker';
 
 export enum PrimitiveType {
   Number = 'number',
@@ -19,7 +20,7 @@ export class PrimitiveValueGenerator implements IValueGenerator {
     this.base = base;
   }
 
-  public generate(type: string): Primitive {
+  public generate(type: string, container: Container): Primitive {
     switch (type) {
       case PrimitiveType.Boolean:
         return faker.random.boolean();
