@@ -24,11 +24,11 @@ export class TypeResolver {
 
   private getGenerator(type: string): IValueGenerator | undefined {
     let generator: IValueGenerator | undefined;
-    if (isUnion(type)) {
+    if (isUnion(type) && !isGeneric(type)) {
       generator = this.unionGenerator;
-    } else if (isPrimitive(type)) {
+    } else if (isPrimitive(type) && !isGeneric(type)) {
       generator = this.primitiveGenerator;
-    } else if (isArray(type)) {
+    } else if (isArray(type) && !isGeneric(type)) {
       generator = this.arrayGenerator;
     } else if (isGeneric(type)) {
       generator = this.genericGenerator;
