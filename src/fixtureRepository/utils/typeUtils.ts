@@ -12,7 +12,7 @@ export function isPrimitive(type: string): boolean {
 }
 
 export function isArray(type: string): boolean {
-  return type.includes('[]');
+  return type.endsWith('[]');
 }
 
 export function isUnion(type: string): boolean {
@@ -24,5 +24,5 @@ export function isIntersect(type: string): boolean {
 }
 
 export function isGeneric(type: string): boolean {
-  return type.includes('<') && type.includes('>');
+  return type.includes('<') && type.endsWith('>');
 }

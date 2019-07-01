@@ -1,6 +1,5 @@
 import { IPrimitives, INested, IArrayType, IUnion, IEnumType, Enum1, Enum2 } from './models/testModel';
 import fr from '../src/fixtureRepository';
-import { isArray } from 'util';
 import { GenericModel } from './models/genericInterfaceModel';
 
 describe('Faker tests', () => {
@@ -28,8 +27,8 @@ describe('Faker tests', () => {
   it('should fake array types correctly', () => {
     const result: IArrayType = fr.create('IArrayType');
 
-    expect(isArray(result.stringArray)).toBeTruthy();
-    expect(isArray(result.nestedArray)).toBeTruthy();
+    expect(result.stringArray).toBeInstanceOf(Array);
+    expect(result.nestedArray).toBeInstanceOf(Array);
     expect(result.stringArray.length).toBeGreaterThan(0);
     expect(result.nestedArray.length).toBeGreaterThan(0);
   });
@@ -47,6 +46,16 @@ describe('Faker tests', () => {
     expect(typeof result.model0).toBe('boolean');
     expect(typeof result.model1).toBe('string');
     expect(typeof result.model2).toBe('number');
+  });
+
+  it('should fake generic types with arrays correctly', () => {
+    const result: GenericModel<string[], number[]> = fr.create('GenericModel<string[], number[]>');
+
+    expect(typeof result.model0).toBe('boolean');
+    expect(result.model1.length).toBeGreaterThan(0);
+    expect(result.model2.length).toBeGreaterThan(0);
+    expect(typeof result.model1[0]).toBe('string');
+    expect(typeof result.model2[0]).toBe('number');
   });
 
   it('should fake enum types correctly', () => {
@@ -68,7 +77,7 @@ describe('Faker tests', () => {
   it('should fake array types correctly', () => {
     const result: INested[] = fr.create('INested[]');
 
-    expect(isArray(result)).toBeTruthy();
+    expect(result).toBeInstanceOf(Array);
     expect(result.length).toBeGreaterThan(0);
   });
 
