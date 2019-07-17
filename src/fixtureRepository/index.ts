@@ -1,6 +1,6 @@
 import glob from 'glob';
 import { ValueGeneratorBase } from './generators/valueGeneratorBase';
-import { TypeChecker, ContainerItem, Container } from '../typeChecker';
+import { TypeChecker, Container } from '../typeChecker';
 
 export default class FixtureRepository {
   private static valueGenerator: ValueGeneratorBase;
