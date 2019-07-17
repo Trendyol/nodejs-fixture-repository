@@ -1,4 +1,4 @@
-import glob from 'glob';
+import glob from 'fast-glob';
 import { ValueGeneratorBase } from './generators/valueGeneratorBase';
 import { TypeChecker, Container } from '../typeChecker';
 
@@ -8,7 +8,6 @@ export default class FixtureRepository {
 
   public static setup(pattern: string) {
     const fileNames = glob.sync(pattern);
-
     const typeChecker = new TypeChecker(fileNames);
 
     this.container = typeChecker.generateContainer();
