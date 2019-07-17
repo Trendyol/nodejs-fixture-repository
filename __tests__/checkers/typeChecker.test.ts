@@ -1,5 +1,5 @@
 import { TypeChecker, Container, Declaration } from '../../src/typeChecker';
-import glob from 'glob';
+import glob from 'fast-glob';
 
 let files: string[] = [];
 describe('type cheker tests', () => {
