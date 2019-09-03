@@ -1,3 +1,7 @@
+# Version 1.4.1
+**Update**
+- Updated README and added example with jest
+
 # Version 1.4.0
 **Features**
 - Added options for setup method.
@@ -7,8 +11,8 @@
             additionalFiles?: string[];
         }
         
-    **ignoreGlob:** Ignore patterns during glob search. Should be glob patterns.
-    **additionalFiles:** Add file paths to include in creation of type checker. These should be relative to cwd.
+    **ignoreGlob:** Ignore patterns during glob search. Must be glob patterns.
+    **additionalFiles:** Add file paths to include in creation of type checker. These must be relative to cwd.
 
 **Performance**
 - Changed glob library from *glob* to *fast-glob*.
