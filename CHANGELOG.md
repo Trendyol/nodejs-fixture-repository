@@ -1,6 +1,13 @@
-# Version 1.4.1
+# Version 1.4.2
 **Update**
-- Updated README and added example with jest
+- Update typescript and ts-morph versions
+
+**Update**
+- Update typescript and ts-morph versions
+
+# Version 1.4.1
+**Bugfix**
+- Fix where const enums cannot be resolved correctly. This is a temporary fix to prevent clients breakage.
 
 # Version 1.4.0
 **Features**

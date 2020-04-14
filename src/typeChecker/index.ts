@@ -32,7 +32,7 @@ export class TypeChecker {
   private project: Project;
   constructor(files: string[]) {
     this.project = new Project();
-    this.project.addExistingSourceFiles(files);
+    this.project.addSourceFilesAtPaths(files);
 
     this.generateContainer = this.generateContainer.bind(this);
     this.getContainerItemsFromFiles = this.getContainerItemsFromFiles.bind(this);
@@ -48,7 +48,10 @@ export class TypeChecker {
 
     files.forEach(file => {
       file.getInterfaces().forEach(_interface => items.push(this.mapInterfaceProperties(_interface)));
-      file.getEnums().forEach(_enum => items.push(this.mapEnumMembers(_enum)));
+      file
+        .getEnums()
+        .filter(_enum => !_enum.isConstEnum())
+        .forEach(_enum => items.push(this.mapEnumMembers(_enum)));
     });
 
     return items;
