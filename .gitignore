@@ -17,4 +17,4 @@ dist/
 client/dist/
 coverage/
 classes.json
-testRun.ts
+testRun.ts.git/

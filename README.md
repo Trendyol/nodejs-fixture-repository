@@ -76,3 +76,4 @@ Then in your test you could easily use like this without importing fr ever again
     global.fr.create('IPerson');
 
 
+test
